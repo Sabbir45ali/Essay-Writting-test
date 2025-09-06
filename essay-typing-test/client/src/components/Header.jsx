@@ -1,6 +1,5 @@
 import React from 'react';
-import { Clock, FileText } from 'lucide-react';
-
+import { Clock, FileText } from 'lucide-react'; 
 const Header = ({ isTestActive, timeLeft, onEndTest, formatTime }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
