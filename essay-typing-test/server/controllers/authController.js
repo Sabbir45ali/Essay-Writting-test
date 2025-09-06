@@ -27,7 +27,7 @@ exports.register = async (req, res) => {
     res.json({ user: { id: user._id, email: user.email }, token });
   } catch (err) {
     console.error("Register error:", err);  // Add this log
-    res.status(500).json({ msg: "Server error" });
+    res.status(500).json({ msg: "Server responce failed" });
   }
 };
 
