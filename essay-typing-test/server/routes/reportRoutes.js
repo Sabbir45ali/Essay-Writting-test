@@ -4,6 +4,6 @@ const auth = require('../middleware/authMiddleware');
 const reportController = require('../controllers/reportController');
 
 router.get('/', auth, reportController.getReports);
-router.post('/', auth, reportController.createReport);
+router.post('/', auth, reportController.saveReport);
 
 module.exports = router;
