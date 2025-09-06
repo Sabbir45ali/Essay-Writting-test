@@ -1,8 +1,9 @@
-const router = require('express').Router();
-const auth = require('../middleware/authMiddleware');
-const { saveReport, getReports } = require('../controllers/reportController');
+const express = require('express');
+const router = express.Router();
+const auth = require('../middlewares/authMiddleware');
+const reportController = require('../controllers/reportController');
 
-router.post('/', auth, saveReport);
-router.get('/', auth, getReports);
+router.get('/', auth, reportController.getReports);
+router.post('/', auth, reportController.createReport);
 
 module.exports = router;
