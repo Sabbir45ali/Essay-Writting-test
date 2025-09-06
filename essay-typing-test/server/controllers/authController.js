@@ -33,17 +33,23 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { email, password } = req.body;
+
+  if (!email || !password) {
+    return res.status(400).json({ msg: "Please enter all fields" });
+  }
+
   try {
     const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: 'Invalid credentials' });
+    if (!user) return res.status(400).json({ msg: "Invalid credentials" });
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
+    const isMatch = await bcrypt.compare(password, user.passwordHash);
+    if (!isMatch) return res.status(400).json({ msg: "Invalid credentials" });
 
     const token = generateToken(user);
-
     res.json({ user: { id: user._id, email: user.email }, token });
   } catch (err) {
-    res.status(500).send('Server error');
+    console.error("Login error:", err);
+    res.status(500).json({ msg: "Server error" });
   }
 };
+
