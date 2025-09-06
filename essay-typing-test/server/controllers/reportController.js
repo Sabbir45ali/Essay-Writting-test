@@ -1,23 +1,25 @@
-const Report = require('../models/Report');
+const Report = require('../models/report');  // Import the Report model
 
-exports.saveReport = async (req, res) => {
+// Get all reports for logged-in user
+exports.getReports = async (req, res) => {
   try {
-    const userId = req.user;
-    const reportData = req.body;
-    const newReport = new Report({ ...reportData, user: userId });
-    await newReport.save();
-    res.json(newReport);
+    const reports = await Report.find({ user: req.user.id }).sort({ createdAt: -1 });
+    return reports;  // For router to handle response
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    throw err;
   }
 };
 
-exports.getReports = async (req, res) => {
+// Save a new report for logged-in user
+exports.saveReport = async (req, res) => {
   try {
-    const userId = req.user;
-    const reports = await Report.find({ user: userId }).sort({ createdAt: -1 });
-    res.json(reports);
+    const newReport = new Report({
+      ...req.body,
+      user: req.user.id   // Attach user ID from auth middleware
+    });
+    const savedReport = await newReport.save();
+    return savedReport;
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    throw err;
   }
 };
