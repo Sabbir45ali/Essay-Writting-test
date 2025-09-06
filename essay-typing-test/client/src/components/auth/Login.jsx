@@ -1,34 +1,36 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 const Login = ({ onLoginSuccess }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     try {
-      const res = await fetch('https://essay-writting-test.onrender.com/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password }),
-      });
-  
+      const res = await fetch(
+        "https://essay-writting-test.onrender.com/api/auth/login",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
       const data = await res.json();
-  
+
       if (res.ok) {
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         onLoginSuccess(data.user);
-        navigate('/'); // redirect after login
+        navigate("/"); // redirect after login
       } else {
-        setError(data.msg || 'Login failed');
+        setError(data.msg || "Login failed");
       }
     } catch (err) {
-      setError('Server error, please try again later');
+      setError("Server error, please try again later");
     }
   };
-  
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 via-indigo-300 to-indigo-400">
@@ -62,8 +64,11 @@ const Login = ({ onLoginSuccess }) => {
           </button>
         </form>
         <p className="text-center text-sm text-gray-600 mt-6">
-          Don’t have an account?{' '}
-          <a href="/signup" className="text-indigo-700 hover:underline font-medium">
+          Don’t have an account?{" "}
+          <a
+            href="/signup"
+            className="text-indigo-700 hover:underline font-medium"
+          >
             Sign up
           </a>
         </p>
