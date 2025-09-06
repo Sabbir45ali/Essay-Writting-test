@@ -1,4 +1,4 @@
-const Report = require('../models/report');  // Import the Report model
+const Report = require('../models/Report');  // Import the Report model
 
 // Get all reports for logged-in user
 exports.getReports = async (req, res) => {
