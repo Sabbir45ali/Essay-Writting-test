@@ -9,37 +9,24 @@ const Signup = ({ onSignupSuccess }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    try {
-      const res = await fetch("https://essay-writting-test.onrender.com/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (res.ok) {
-        onSignupSuccess(); // call to redirect to login page
-      } else {
-        const data = await res.json();
-        setError(data.msg || "Signup failed");
-      }
-    } catch {
-      setError("Server error, try again later");
-    }
+  
+    // Check if passwords match upfront
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       return;
     }
-
+  
     try {
       const res = await fetch("https://essay-writting-test.onrender.com/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await res.json();
-
+  
       if (res.ok) {
+        // Save token, pass user info to parent
         localStorage.setItem("token", data.token);
         onSignupSuccess(data.user);
       } else {
@@ -49,6 +36,7 @@ const Signup = ({ onSignupSuccess }) => {
       setError("Server error, please try again later");
     }
   };
+  
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 via-indigo-300 to-indigo-400">
