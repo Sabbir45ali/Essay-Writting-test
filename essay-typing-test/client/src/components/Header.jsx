@@ -1,6 +1,7 @@
 import React from 'react';
 import { Clock, FileText } from 'lucide-react'; 
-const Header = ({ isTestActive, timeLeft, onEndTest, formatTime }) => {
+
+const Header = ({ isTestActive, timeLeft, onEndTest, formatTime, onLogout }) => {
   return (
     <div className="bg-white rounded-xl shadow-lg p-6 mb-6">
       <div className="flex items-center justify-between">
@@ -25,6 +26,12 @@ const Header = ({ isTestActive, timeLeft, onEndTest, formatTime }) => {
               className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-colors"
             >
               End Test
+            </button>
+            <button
+              onClick={onLogout}
+              className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition-colors"
+            >
+              Logout
             </button>
           </div>
         )}
