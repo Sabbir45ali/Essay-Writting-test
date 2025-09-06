@@ -34,7 +34,7 @@ const EssayTypingTest = ({ user }) => {
       const token = localStorage.getItem('token');
       if (!token) return;
       try {
-        const res = await fetch('http://localhost:5000/api/reports', {
+        const res = await fetch('https://essay-writting-test.onrender.com/api/reports', {
           headers: { 'x-auth-token': token }
         });
         if (res.ok) {
@@ -87,7 +87,7 @@ const EssayTypingTest = ({ user }) => {
     const token = localStorage.getItem('token');
     if (!token) return;
     try {
-      const res = await fetch('http://localhost:5000/api/reports', {
+      const res = await fetch('https://essay-writting-test.onrender.com/api/reports', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
