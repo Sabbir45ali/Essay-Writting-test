@@ -14,26 +14,21 @@ const Login = ({ onLoginSuccess }) => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await res.json();
-
+  
       if (res.ok) {
         localStorage.setItem('token', data.token);
         onLoginSuccess(data.user);
+        navigate('/'); // redirect after login
       } else {
         setError(data.msg || 'Login failed');
       }
     } catch (err) {
       setError('Server error, please try again later');
     }
-    if (res.ok) {
-      localStorage.setItem('token', data.token);
-      onLoginSuccess(data.user);
-      navigate('/'); // redirect to home page after login
-    } else {
-      // handle error
-    }
   };
+  
 
   return (
     <div className="h-screen w-screen flex items-center justify-center bg-gradient-to-br from-indigo-200 via-indigo-300 to-indigo-400">

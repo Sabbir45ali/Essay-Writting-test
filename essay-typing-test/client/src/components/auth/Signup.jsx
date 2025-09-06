@@ -8,34 +8,33 @@ const Signup = ({ onSignupSuccess }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
+    setError('');
   
-    // Check if passwords match upfront
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
+      setError('Passwords do not match');
       return;
     }
   
     try {
-      const res = await fetch("https://essay-writting-test.onrender.com/api/auth/register", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const res = await fetch('https://essay-writting-test.onrender.com/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password }),
       });
   
       const data = await res.json();
   
       if (res.ok) {
-        // Save token, pass user info to parent
-        localStorage.setItem("token", data.token);
+        localStorage.setItem('token', data.token);
         onSignupSuccess(data.user);
       } else {
-        setError(data.msg || "Signup failed");
+        setError(data.msg || 'Signup failed');
       }
     } catch (err) {
-      setError("Server error, please try again later");
+      setError('Server error, please try again later');
     }
   };
+  
   
 
   return (
