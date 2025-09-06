@@ -6,7 +6,21 @@ const connectDB = require('./config/db');
 const app = express();
 connectDB();
 
-app.use(cors());
+const allowedOrigins = ['https://essay-writting-test.vercel.app'];
+
+app.use(cors({
+  origin: function(origin, callback) {
+    // Allow requests with no origin (like Postman or curl)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
+  credentials: true, // if you use cookies or auth headers
+}));
+
 app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
